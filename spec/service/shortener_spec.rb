@@ -19,15 +19,14 @@ RSpec.describe Shortener do
     expect(code1).not_to eq(code2)
   end
 
-  it 'give same url same look up code' do
-    url = 'https://github.com/rspec/rspec-rails/-url1'
+  it 'generate a link record with a unique lookup code' do
+    url = 'https://github.com/rspec/rspec-rails'
     shortener = Shortener.new(url)
-    code1 = shortener.lookup_code
+    link1 = shortener.generate_short_link
 
-    url = 'https://github.com/rspec/rspec-rails/-url1'
-    shortener = Shortener.new(url)
-    code2 = shortener.lookup_code
+    expect(link1.valid?).to be(true)
 
-    expect(code1).to eq(code2)
+    link2 = shortener.generate_short_link
+    expect(link2.valid?).to be(true)
   end
 end

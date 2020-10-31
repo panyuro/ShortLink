@@ -1,20 +1,25 @@
 class Shortener
 
-  attr_reader :url
+  attr_reader :url, :link_model
 
-  def initialize(url)
+  def initialize(url, link_model = Link)
     @url = url
+    @link_model = link_model
   end
 
-  # def lookup_code
-  #   string = ''
-  #   7.times do |n|
-  #     string << (rand * n).round
-  #   end
-  #   string
-  # end
+  def generate_short_link
+    link_model.create!(origin_url: url, lookup_code: lookup_code)
+  end
 
   def lookup_code
-    Digest::SHA256.hexdigest(url)[0..6]
+    loop do
+      code = fresh_code
+      break code unless link_model.exists?(lookup_code: fresh_code)
+    end
   end
+
+  def fresh_code
+    SecureRandom.uuid[0..6]
+  end
+
 end
