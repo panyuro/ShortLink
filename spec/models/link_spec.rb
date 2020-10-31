@@ -9,6 +9,14 @@ RSpec.describe Link, type: :model do
     expect(link.valid?).to be(true)
   end
 
+  it 'is valid if the origin_url not formatted properly ' do
+    link = Link.new(
+      origin_url: 'jdskhfkhfeh',
+      lookup_code: '123456'
+    )
+    expect(link.valid?).to be(false)
+  end
+
   it 'is invalid if it not have orgin_url' do
     link = Link.new(
       origin_url: 'https://github.com/rspec/rspec-rails'

@@ -1,2 +1,2 @@
-var lookUpCode = "<%=@link.lookup_code %>"
-console.log(lookUpCode)
+var element = document.getElementById('short-link')
+element.innerHTML = "<%=@link.shortened_url %>"
