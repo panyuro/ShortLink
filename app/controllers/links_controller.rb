@@ -11,6 +11,12 @@ class LinksController < ApplicationController
     end
   end
 
+  def show
+    @link = Link.find_by(lookup_code: params[:lookup_code])
+    redirect_to @link.origin_url
+  end
+
+  private
   def link_params
     params.require(:link).permit(:origin_url)
   end
